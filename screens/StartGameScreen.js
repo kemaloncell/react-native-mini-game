@@ -13,7 +13,7 @@ function StartGameScreen() {
             />
          <View style={styles.buttonsContainer}>
          <View style={styles.buttonContainer}>
-                <PrimaryButton>Reset</PrimaryButton>
+                <PrimaryButton>Reset</PrimaryButton>g
             </View>
             <View style={styles.buttonContainer}>
                 <PrimaryButton>Confirm</PrimaryButton>
