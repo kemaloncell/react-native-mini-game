@@ -1,6 +1,6 @@
 import { Text, StyleSheet, View, Alert } from 'react-native'
 import Title from '../components//ui/Title';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NumberContainer from '../components/game/NumberContainer';
 import PrimaryButton from '../components/ui/PrimaryButton';
 
@@ -18,9 +18,17 @@ function generateRandomNumber(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-function GameScreen({ userNumber }) {
-    const initalGuess = generateRandomNumber(minBoundary, maxBoundary, userNumber)
+function GameScreen({ userNumber, onGameOver }) {
+    const initalGuess = generateRandomNumber(1, 100, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initalGuess)
+    // the code above initalGuess and current guess will be exucute before useEffect!!!! so we dont use 
+    // dynamic variable here, for min and max boundary we have to use hardcoded 
+
+    useEffect(() => {
+        if(currentGuess === userNumber){
+            onGameOver()
+        }
+    }, [currentGuess, userNumber, onGameOver])
 
     function nextGuessHandler(direction) {
         if(
