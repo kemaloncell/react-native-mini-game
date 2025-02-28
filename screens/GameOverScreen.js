@@ -3,18 +3,18 @@ import Title from '../components/ui/Title'
 import PrimaryButton from '../components/ui/PrimaryButton'
 import Colors from '../constants/colors'
 
-function GameOverScreen() {
+function GameOverScreen({ roundsNumber, userNumber, onStartNewGame }) {
     return (
-    <View style={rootContainer}>
+    <View style={styles.rootContainer}>
         <Title style={styles.rootContainer}>GAME OVER!</Title>
         <View style={styles.imageContainer}>
             <Image style={styles.image} source={require('../assets/images/success.png')} />
         </View>
         <Text style={styles.summaryText}>
-            Your phone needed <Text style={styles.highlight}>X</Text> rounds to 
-            guess the number <Text style={styles.highlight}>Y</Text>.
+            Your phone needed <Text style={styles.highlight}>{roundsNumber}</Text> rounds to 
+            guess the number <Text style={styles.highlight}>{userNumber}</Text>.
             </Text>
-        <PrimaryButton>Start New Game</PrimaryButton>
+        <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
     </View>
     );
 }
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     borderRadius:150,
     borderWidth:3,
     borderColor: Colors.primary800,
-    overflow: 'hidden', // it must,
+    overflow: 'hidden', // it must for cricle,
     margin:36,
    },
    image: {
