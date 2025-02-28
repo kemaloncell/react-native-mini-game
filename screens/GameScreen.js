@@ -1,4 +1,4 @@
-import { StyleSheet, View, Alert } from 'react-native'
+import { StyleSheet, View, Alert, Text, FlatList } from 'react-native'
 import Title from '../components//ui/Title';
 import { useState, useEffect } from 'react';
 import NumberContainer from '../components/game/NumberContainer';
@@ -24,6 +24,7 @@ let maxBoundary = 100;
 function GameScreen({ userNumber, onGameOver }) {
     const initalGuess = generateRandomNumber(1, 100, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initalGuess)
+    const [guessRounds, setGuessRounds] = useState([initalGuess])
     // the code above initalGuess and current guess will be exucute before useEffect!!!! so we dont use 
     // dynamic variable here, for min and max boundary we have to use hardcoded 
 
@@ -32,6 +33,11 @@ function GameScreen({ userNumber, onGameOver }) {
             onGameOver()
         }
     }, [currentGuess, userNumber, onGameOver])
+
+    useEffect(() => {
+        minBoundary = 0
+        maxBoundary = 0
+    }, [])
 
     function nextGuessHandler(direction) {
         if(
@@ -52,6 +58,7 @@ function GameScreen({ userNumber, onGameOver }) {
 
         const newRndNum = generateRandomNumber(minBoundary, maxBoundary, currentGuess)
         setCurrentGuess(newRndNum)
+        setGuessRounds(prevGuessRounds => [newRndNum, ...prevGuessRounds])
     }
 
 
@@ -73,7 +80,14 @@ function GameScreen({ userNumber, onGameOver }) {
             </View>
           </View>
          </Card>
-         <View>{/*LOG ROUNDS*/}</View>
+         <View>
+            { guessRounds?.map(guessRound => <Text key={guessRound}>{guessRound}</Text> )}
+            <FlatList
+             data={guessRounds}
+             renderItem={(itemData) => <Text>{itemData}</Text>}
+             keyExtractor={(item) => item}
+            />
+         </View>
     </View>
 }
 
