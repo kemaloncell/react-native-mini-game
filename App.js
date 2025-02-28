@@ -3,13 +3,23 @@ import { LinearGradient } from 'expo-linear-gradient'
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
-
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import Colors from './constants/colors'
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
   const [gameIsOver, setGameIsOver] = useState(true);
+
+  const [fontsLoaded] = useFonts({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+  });
+
+  if(!fontsLoaded){
+    return <AppLoading />
+  }
 
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber)

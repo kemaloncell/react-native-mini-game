@@ -5,6 +5,7 @@ import NumberContainer from '../components/game/NumberContainer';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import Card from '../components/ui/Card'
 import InstructionText from '../components/ui/InstructionText';
+import { Ionicons } from '@expo/vector-icons'
 
 function generateRandomNumber(min, max, exclude) {
     // Math.random() may produce  0 so I added min if it is become 0
@@ -58,10 +59,18 @@ function GameScreen({ userNumber, onGameOver }) {
         <Title>Opponent's Guess</Title>
         <NumberContainer>{currentGuess}</NumberContainer>
          <Card>
-            <InstructionText>Higher or lower?</InstructionText>
-          <View>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>-</PrimaryButton>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, 'greater')}>+</PrimaryButton>
+            <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
+          <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
+                <Ionicons name='remove' size={24} color='white'/>
+            </PrimaryButton>
+            </View>
+            <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'greater')}>
+                 <Ionicons name='add' size={24} color='white'/>
+            </PrimaryButton>
+            </View>
           </View>
          </Card>
          <View>{/*LOG ROUNDS*/}</View>
@@ -76,4 +85,15 @@ const styles = StyleSheet.create({
         padding: 24
     },
 
+    buttonsContainer: {
+        flexDirection: 'row'
+    },
+
+    instructionText: {
+        marginBottom: 12
+    },
+
+    buttonContainer: {
+        flex:1
+    },
 });
