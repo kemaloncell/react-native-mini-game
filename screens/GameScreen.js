@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import NumberContainer from '../components/game/NumberContainer';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import Card from '../components/ui/Card'
+import GuessLogItem from '../components/game/GuessLogItem';
 import InstructionText from '../components/ui/InstructionText';
 import { Ionicons } from '@expo/vector-icons'
 
@@ -25,18 +26,20 @@ function GameScreen({ userNumber, onGameOver }) {
     const initalGuess = generateRandomNumber(1, 100, userNumber)
     const [currentGuess, setCurrentGuess] = useState(initalGuess)
     const [guessRounds, setGuessRounds] = useState([initalGuess])
+
+    const guessRoundsListLength = guessRounds.length
     // the code above initalGuess and current guess will be exucute before useEffect!!!! so we dont use 
     // dynamic variable here, for min and max boundary we have to use hardcoded 
 
     useEffect(() => {
         if(currentGuess === userNumber){
-            onGameOver()
+            onGameOver(guessRounds.length)
         }
     }, [currentGuess, userNumber, onGameOver])
 
     useEffect(() => {
-        minBoundary = 0
-        maxBoundary = 0
+        minBoundary = 1
+        maxBoundary = 100
     }, [])
 
     function nextGuessHandler(direction) {
@@ -80,11 +83,12 @@ function GameScreen({ userNumber, onGameOver }) {
             </View>
           </View>
          </Card>
-         <View>
-            { guessRounds?.map(guessRound => <Text key={guessRound}>{guessRound}</Text> )}
+         <View style={styles.listContainer}>
             <FlatList
              data={guessRounds}
-             renderItem={(itemData) => <Text>{itemData}</Text>}
+             renderItem={(itemData) => <GuessLogItem 
+                roundNumber={guessRoundsListLength - itemData.index} 
+                guess={itemData.item}/>}
              keyExtractor={(item) => item}
             />
          </View>
@@ -110,4 +114,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flex:1
     },
+    listContainer: {
+        flex: 1,
+        padding: 16,
+    }
 });

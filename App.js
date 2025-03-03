@@ -27,8 +27,10 @@ export default function App() {
     setGameIsOver(false) // bcs the game is still keep going
   }
 
-  function gameOverHandler() {
+  function gameOverHandler(numberOfRounds) {
     setGameIsOver(true)
+    console.log('testt', numberOfRounds)
+    setGuessRounds(numberOfRounds)
   }
 
   function startNewGameHandler() {
