@@ -2,6 +2,7 @@ import { Text, StyleSheet } from 'react-native'
 import Colors from '../../constants/colors'
 
 function InstructionText({children, style}) {
+    // using style that is come as a prop and use it
     return <Text style={[styles.instructionText, style]}>{children}</Text>
 }
 
